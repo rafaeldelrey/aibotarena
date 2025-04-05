@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Bot Arena</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Skulpt scripts removed -->
+</head>
+<body>
+  <div id="releaseInfo" style="position: fixed; top: 10px; right: 10px; color: white !important; font-size: 16px !important; z-index: 10000 !important; background: rgba(0, 0, 0, 0.75) !important; padding: 4px !important; border-radius: 4px;"></div>
+  <script>
+    fetch('version.json')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('releaseInfo').textContent = `Version: ${data.version}`;
+      })
+      .catch(error => console.error('Error loading version:', error));
+  </script>
+    <h1>AI Bot Arena</h1>
+    <div class="main-container">
+        <canvas id="gameCanvas"></canvas>
+        <div class="controls">
+            <h2>Ship 2 (Red) AI Code (JavaScript):</h2>
+            <textarea id="shipCode" rows="15" cols="50">
+// Example JavaScript AI Code
+// The function 'runAI' will be called each frame.
+// It receives the 'ship' object and an 'api' object.
+
+// API functions:
+// api.turnLeft(ship)
+// api.turnRight(ship)
+// api.thrust(ship)
+// api.shoot(ship)
+// api.scanEnemy(ship) -> returns { distance, angle } or null
+// api.getAngle(ship) -> returns angle in radians
+// api.getX(ship) -> returns x coordinate
+// api.getY(ship) -> returns y coordinate
+
+function runAI(ship, api) {
+  const enemyInfo = api.scanEnemy(ship);
+  const facingTolerance = 0.1; // Radians (approx 5.7 degrees)
+  const shootingDistance = 250; // Distance within which to start shooting
+  const tooCloseDistance = 80; // Distance below which to stop thrusting
+
+  if (enemyInfo) {
+    // Enemy detected
+    const angleDiff = enemyInfo.angle; // Relative angle to enemy
+    const distance = enemyInfo.distance;
+
+    // --- Aiming ---
+    if (Math.abs(angleDiff) > facingTolerance) {
+      // Need to turn
+      if (angleDiff > 0) {
+        api.turnRight(ship); // Enemy is clockwise
+      } else {
+        api.turnLeft(ship); // Enemy is counter-clockwise
+      }
+    } else {
+      // --- Facing enemy: Decide whether to shoot or thrust ---
+      if (distance < shootingDistance) {
+        api.shoot(ship); // Close enough, shoot!
+      }
+      
+      // --- Movement ---
+      // Thrust only if facing enemy and not too close
+      if (distance > tooCloseDistance) {
+           api.thrust(ship);
+      }
+      // Optional: Add logic to back away if too close?
+    }
+    
+  } else {
+    // No enemy detected - simple patrol behavior
+    api.turnRight(ship); 
+    // Add occasional thrust
+    if (Math.random() < 0.05) { api.thrust(ship); } 
+  }
+}
+</textarea>
+            <button id="runCodeButton">Load AI Code</button> <!-- No longer disabled -->
+             <pre id="output"></pre> <!-- Kept for general errors -->
+          </div>
+      </div>
+      <script src="game.js"></script> 
+  </body>
+  </html>

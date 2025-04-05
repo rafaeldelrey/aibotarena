@@ -1,0 +1,68 @@
+body {
+    /* display: flex; */ /* Removed */
+    /* flex-direction: column; */ /* Removed */
+    /* align-items: center; */ /* Removed */
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: sans-serif;
+    padding: 20px; /* Add padding */
+}
+
+h1 {
+    /* margin-top: 20px; */ /* Removed */
+    color: #333;
+    text-align: center; /* Center */
+    margin-bottom: 20px; /* Add bottom margin */
+}
+
+/* New styles */
+.main-container {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    align-items: flex-start; /* Align items to the top */
+    gap: 20px; /* Space between canvas and controls */
+    width: 100%;
+    /* max-width: 1200px; */ /* Optional: Limit overall width */
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between control elements */
+    width: 400px; /* Give controls a fixed width */
+}
+
+.controls h2 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+}
+
+.controls textarea {
+    font-family: monospace; /* Use monospace font for code */
+    resize: vertical; /* Allow vertical resize */
+}
+
+.controls button {
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.controls pre { /* Style the output area */
+    background-color: #eee;
+    border: 1px solid #ccc;
+    padding: 10px;
+    min-height: 50px; /* Minimum height */
+    max-height: 150px; /* Maximum height */
+    overflow-y: auto; /* Add scrollbar if needed */
+    white-space: pre-wrap; /* Wrap long lines */
+    word-wrap: break-word;
+    font-size: 0.9em;
+    color: #333;
+}
+
+canvas {
+    border: 1px solid black;
+    background-color: #000; /* Black background for the game area */
+    /* margin-top: 20px; */ /* Removed, handled by container */
+}
